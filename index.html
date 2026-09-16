@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zion AI Release Radar — track new AI models & tooling</title>
+<meta name="description" content="Curated radar of new AI model, framework and agent tooling releases with impact ratings. Free tool by Zion Tech Group.">
+<style>
+:root{--bg:#0c1210;--card:#14201b;--acc:#ffb454;--txt:#eef4f0;--mut:#93a89d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:48px 24px 24px;text-align:center;background:linear-gradient(160deg,#3a2a12,#0c1210)}
+h1{margin:0 0 8px}.wrap{max-width:900px;margin:0 auto;padding:24px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{padding:6px 14px;border-radius:20px;border:1px solid #33473d;background:var(--card);color:var(--txt);cursor:pointer}
+.chip.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.item{background:var(--card);border:1px solid #24352c;border-radius:14px;padding:16px;margin:10px 0}
+.item h3{margin:0 0 4px}.tag{font-size:.72rem;padding:2px 8px;border-radius:12px;background:#22352c;color:var(--acc);margin-right:6px}
+.imp{float:right;color:var(--acc)}.meta{color:var(--mut);font-size:.82rem;margin-top:6px}
+footer{padding:32px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid #1e2b24;margin-top:40px}
+footer a{color:var(--acc);text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<header><h1>📡 Zion AI Release Radar</h1>
+<p>Curated radar of significant AI model, framework and agent-tooling releases. Filter by category; impact-rated by Zion analysts.</p></header>
+<div class="wrap">
+<div class="filters" id="f"></div>
+<div id="list"></div>
+</div>
+<footer>Part of the <a href="https://ziontechgroup.com">Zion Tech Group</a> AI apps network ·
+<a href="https://ziontechgroup.com/zion-mcp-finder/">MCP Server Finder</a>
+<a href="https://ziontechgroup.com/zion-llm-cost-calculator/">LLM Cost Calculator</a>
+<a href="https://ziontechgroup.com/zion-rag-eval-kit/">RAG Eval Kit</a>
+<a href="https://ziontechgroup.com/blog/">Zion blog</a></footer>
+<script>
+const R=[
+{d:'2026-09',c:'Models',t:'GPT-5.1 series',x:'Reasoning improvements, 1M context tier',i:5},
+{d:'2026-09',c:'Models',t:'Claude Opus 4.5',x:'Long-horizon agentic coding gains',i:5},
+{d:'2026-08',c:'Agents',t:'MCP Registry v0.1 GA',x:'Official discovery registry for MCP servers',i:4},
+{d:'2026-08',c:'Agents',t:'Streamable HTTP becomes default MCP transport',x:'SSE deprecated across major servers',i:4},
+{d:'2026-08',c:'Frameworks',t:'LangGraph 1.0',x:'Stable agent orchestration runtime',i:4},
+{d:'2026-07',c:'Models',t:'Gemini 2.5 Flash-Lite',x:'Ultra-low-cost tier for high-volume agents',i:3},
+{d:'2026-07',c:'Infra',t:'vLLM 0.10',x:'Disaggregated serving, KV-cache offload',i:3},
+{d:'2026-07',c:'Agents',t:'OpenAI Agents SDK GA',x:'Hosted tool loop + tracing',i:4},
+{d:'2026-06',c:'Frameworks',t:'LlamaIndex workflows 2.0',x:'Event-driven RAG/agent pipelines',i:3},
+{d:'2026-06',c:'Infra',t:'NVIDIA NIM for edge',x:'Optimized inference microservices on Jetson',i:2}];
+const cats=['All',...new Set(R.map(r=>r.c))];let cur='All';
+const f=document.getElementById('f');
+f.innerHTML=cats.map(c=>`<button class="chip ${c===cur?'on':''}" data-c="${c}">${c}</button>`).join('');
+function render(){document.getElementById('list').innerHTML=R.filter(r=>cur==='All'||r.c===cur).map(r=>`<div class="item"><span class="imp">${'★'.repeat(r.i)}</span><h3>${r.t}</h3><span class="tag">${r.c}</span><span class="tag">${r.d}</span><div class="meta">${r.x}</div></div>`).join('');}
+f.addEventListener('click',e=>{if(e.target.dataset.c){cur=e.target.dataset.c;[...f.children].forEach(b=>b.classList.toggle('on',b.dataset.c===cur));render();}});
+render();
+</script>
+</body>
+</html>
